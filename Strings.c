@@ -3,16 +3,19 @@
 
     Descrição: Programa feito com a intenção de demonstrar o uso de algumas das principais funções para
                se manipular cadeia de caracteres (strings) em C e facilitar o entendimento das mesmas
-               através de exemplos, testes do usuário e descrição do funcionamento (futuramente nos comentários)
+               através de exemplos, testes do usuário e descrição do funcionamento
 
-    Nota: Funções de conversão (da stdlib.h) e comentários em breve.
-
+    Nota: Funções de conversão em breve.
 
 */
+
 #include <stdio.h>
 #include <string.h>
 
 #define TAM 80
+
+
+// Protótipo das funções
 
 int _EscolhaDeOpcao(int LimiteInferior, int LimiteSuperior);
 void _LerString(char *str, int tam);
@@ -47,14 +50,16 @@ void _Stringstr();
 void _Stringtok();
 
 
+// Função principal
 
 int main(){
     int Opcao,i,j;
     system("color f0");
 
+    //Loop do Menu
     while(1){
         _ImprimeMenu();
-        Opcao = _EscolhaDeOpcao(1,25);
+        Opcao = _EscolhaDeOpcao(1,23);
         _LimpaTela();
 
         if(Opcao == 1)
@@ -101,19 +106,35 @@ int main(){
             _Stringtok();
         if(Opcao == 22)
             _StringSwapAdjacentBytes();
+        if(Opcao == 23)
+                break;
         _Pausa();
 
     }
-
+    return 0;
 }
 
 
 //_____________________________________________________________ Funções de Cópia _____________________________________________________________
+
+
+/*
+ Função:    char *strcpy(char *string_destino, char *string_origem)
+
+ Descrição:	Função que realiza uma cópia de uma string, no caso, copia a string_origem na string_destino.
+
+ Parâmetros:
+			string_destino : string que receberá a cópia
+			string_origem : string que será copiada
+
+ Retorno: Retorna o ponteiro do ínicio da string que recebeu a cópia (string_destino)
+
+*/
 void _StringCopy(){
 
     char string1[TAM],string2[TAM];
 
-    printf("\n\n _____________ char *strcpy(string2,string1) _____________  \n\n");
+    printf("\n\n _____________ char *strcpy(char *string2,char *string1) _____________  \n\n");
     strcpy(string1,"string qualquer");
     strcpy(string2,string1);
     printf ("\n\n Exemplo:\n\n String 1:  %30s \n String 2(copia da 1):  %18s\n\n ",string1,string2);
@@ -127,6 +148,19 @@ void _StringCopy(){
     printf("\n String 2: %s",string2);
     _Pontilhado();
 }
+/*
+ Função:    char *strncpy(char *string_destino, char *string_origem, size_t num)
+
+ Descrição:	Função que realiza uma cópia de até determinado caractere de uma string.
+
+ Parâmetros:
+			string_destino : string que receberá a cópia
+			string_origem : string que será copiada
+			num : número máximo de caracteres a serem copiados da string_origem
+
+ Retorno: Retorna o ponteiro do ínicio da string que recebeu a cópia (string_destino)
+
+*/
 void _String_N_Copy(){
 
     char string1[TAM],string2[TAM];
@@ -152,6 +186,22 @@ void _String_N_Copy(){
 
 
 //_____________________________________________________________ Funções de Comparação _____________________________________________________________
+
+
+/*
+ Função:    int strcmp(char *string1, char *string2)
+
+ Descrição:	- Função que compara duas strings lexicograficamente (verifica qual vem antes ou depois em ordem alfabética)
+			- Faz a comparação considerando case sensitive de acordo com a tabela ASC II( Ex: 'A' vem antes de 'a' )
+
+ Parâmetros: string1 e string2 : strings que serão comparadas
+
+ Retorno:
+			0 : Se as strings forem iguais
+		   >0 : Se a string1 vem depois da string2 em ordem alfabética
+		   <0 : Se a se string 2 vem depois da string1 em ordem alfabética
+
+*/
 void _StringCompare(){
 
     char string1[TAM],string2[TAM];
@@ -181,6 +231,22 @@ void _StringCompare(){
     }
     _Pontilhado();
 }
+
+/*
+ Função:    int strcmpi(char *string1, char *string2)
+
+ Descrição:	- Função que compara duas strings lexicograficamente
+			- Faz a comparação SEM considerar case sensitive ( Ex: 'A' == 'a' )
+
+ Parâmetros: string1 e string2 : strings que serão comparadas
+
+ Retorno:
+			0 : Se as strings forem iguais
+		   >0 : Se a string1 vem depois da string2 em ordem alfabética
+		   <0 : Se a se string 2 vem depois da string1 em ordem alfabética
+
+*/
+
 void _StringCompare_I_(){
 
     char string1[TAM],string2[TAM];
@@ -209,6 +275,25 @@ void _StringCompare_I_(){
     }
     _Pontilhado();
 }
+
+/*
+ Função:   int strncmp(char *string1, char *string2, size_t n)
+
+ Descrição:	- Função que compara duas strings lexicograficamente
+			- Faz a comparação considerando case sensitive de acordo com a tabela ASC II( Ex: 'A' vem antes de 'a' )
+
+ Parâmetros:
+			string1 e string2 : strings que serão comparadas
+			n : número máximo de caracteres a serem comparados das duas strings
+ Retorno:
+			0 : Se as strings forem iguais (até o caractere n)
+		   >0 : Se a string1 vem depois da string2 em ordem alfabética (até o caractere n)
+		   <0 : Se a se string 2 vem depois da string1 em ordem alfabética (até o caractere n)
+
+
+ OBS: há também a função "strnicmp" não exemplificada neste código , semelhante a strncmp porém sem case sensitive
+*/
+
 void _String_N_Compare(){
 
     char string1[TAM],string2[TAM];
@@ -216,7 +301,7 @@ void _String_N_Compare(){
 
     printf("\n  ");
     _Linha();
-    printf("\n | \n |   ==> int strncmp(char *string1, char *string2, int n)           \n | \n |");
+    printf("\n | \n |  _____________ int strncmp(char *string1, char *string2, int n)_____________ \n | \n |");
     printf("   n : comparar ate o caractere \"n\". \n |");
     _Linha();
     strcpy(string1,"abcdeedcba");
@@ -246,6 +331,23 @@ void _String_N_Compare(){
     _Pontilhado();
 }
 //_____________________________________________________________ Funções de Concatenação _____________________________________________________________
+
+
+/*
+ Função:    char * strncat ( char *string1, char *string2, size_t num )
+
+ Descrição:	Função que concatena uma string com num cacteres da segunda string
+
+ Parâmetros:
+			string1 : string que será concatenada e receberá a concatenação
+			string2 : string que será concatenada até num caracteres
+			num : número máximo de caracteres a serem concatenados da string2
+
+ Retorno: retorna o ponteiro do ínicio da string que recebeu a concatenação (string1)
+
+*/
+
+
 void _String_N_Cat(){
     char string1[TAM],string2[TAM];
     int n;
@@ -275,6 +377,19 @@ void _String_N_Cat(){
     _Pontilhado();
 
 }
+
+/*
+ Função:   char * strcat ( char * string1, const char * string2 )
+
+ Descrição:	- Função que concatena duas strings e armazena na string do primeiro parâmetro
+
+ Parâmetros:
+            - string1 e string2 : strings que serão concatenadas
+
+ Retorno: retorna o ponteiro do ínicio da string que recebeu a concatenação (string1)
+
+*/
+
 void _StringCat(){
     char string1[2*TAM],string2[TAM];
     printf("\n\n _____________ char *strcat(char *string1, char *string2) _____________  \n\n");
@@ -298,6 +413,19 @@ void _StringCat(){
 }
 
 //_____________________________________________________________ Outras funções _____________________________________________________________
+
+
+/*
+ Função:   char *strerror ( int erronum )
+
+ Descrição:	- Função que retorna uma string com a mensagem de erro correspondente ao número passado no parâmetro
+
+ Parâmetros: - erronum : número/código do erro requisitado
+
+ Retorno: retorna o ponteiro do ínicio da string da mensagem de erro
+
+*/
+
 void _StringError(){
     int n,i;
     printf("\n\n _____________ char *strerror(int n) _____________  \n\n");
@@ -309,6 +437,17 @@ void _StringError(){
     _Pontilhado();
 }
 
+
+/*
+ Função:   size_t strlen ( const char * str );
+
+ Descrição:	- Função retorna o tamanho de uma string (quantidade de caracteres)
+
+ Parâmetros: - str: string que será avaliada
+
+ Retorno: retorna a quantidade de caracteres na string (não conta o /0)
+
+*/
 void _StringLenght(){
 
     char string1[TAM];
@@ -330,12 +469,25 @@ void _StringLenght(){
     _Pontilhado();
 }
 
+/*
+ Função:   char *strset(char *string, int c)
+
+ Descrição:	- Função substitui os caracteres de uma string por determinado caractere
+
+ Parâmetros:
+            - string: string a será modificada
+			- c : caractere que será utilizado
+
+ Retorno: retorna o ponteiro da string final com os caracteres substituidos por 'c'
+
+*/
+
 void _StringSet(){
 
     char string1[TAM],c;
     int tamanho;
 
-    printf("\n\n _____________ char *strset(char *string, char c) _____________  \n");
+    printf("\n\n _____________ char *strset(char *string, int c) _____________  \n");
     strcpy(string1,"abc123def");
     printf ("\n Exemplo:\n\n String:  %s \n c: 'x'  ",string1);
     strset(string1,'x');
@@ -352,12 +504,26 @@ void _StringSet(){
     _Pontilhado();
 }
 
+/*
+ Função:   char *strnset(char *string, int c, size_t n)
+
+ Descrição:	- Função substitui os caracteres de uma string por um caractere específico até certa quantia de caracteres
+
+ Parâmetros:
+            - string: string a será modificada
+			- c : caractere que será utilizado
+			- n : quantidade de caracteres a serem substituidos pelo caractere c
+
+ Retorno: retorna o ponteiro da string final com os caracteres substituidos por 'c' até n
+
+*/
+
 void _String_N_Set(){
 
     char string1[TAM],c;
     int tamanho,n;
 
-    printf("\n\n _____________ char *strnset(char *string, char c,int n) _____________  \n");
+    printf("\n\n _____________ char *strnset(char *string, int c, size_t n) _____________  \n");
     strcpy(string1,"abcdefghi");
     printf ("\n Exemplo:\n\n String:  %s \n c: 'x' \n n: 4",string1);
     strnset(string1,'x',4);
@@ -375,6 +541,20 @@ void _String_N_Set(){
     printf("\n => String: %s",string1);
     _Pontilhado();
 }
+
+/*
+ Função:   char *strupr(char *string)
+
+ Descrição:	- Função converte os caracteres (que forem do alfabeto) da string para maiúsculo
+            - Os que já estiverem em maiúsculo não serão alterados
+ Parâmetros:
+            - string: string a será modificada
+
+
+ Retorno: retorna o ponteiro da string modificada com os caracteres em maiúsculo (caracteres do alfabeto)
+
+*/
+
 void _StringUpper(){
 
     char string1[TAM];
@@ -393,7 +573,19 @@ void _StringUpper(){
     printf("\n => String: %s",string1);
     _Pontilhado();
 }
+/*
+ Função:   char *strlwr(char *string)
 
+ Descrição:	- Função converte os caracteres (que forem do alfabeto) da string para minúsculo
+            - Os que já estiverem em minúsculo não serão alterados
+
+ Parâmetros:
+            - string: string a será modificada
+
+
+ Retorno: retorna o ponteiro da string modificada com os caracteres em minúsculo (caracteres do alfabeto)
+
+*/
 void _StringLower(){
 
     char string1[TAM];
@@ -413,6 +605,18 @@ void _StringLower(){
     _Pontilhado();
 }
 
+/*
+ Função:   char *strrev(char *string)
+
+ Descrição:	- Função inverte os caracteres de uma string ( os caracteres do inicio vão para o fim, e vice-versa)
+
+ Parâmetros:
+            - string: string a será modificada
+
+ Retorno: retorna o ponteiro da string invertida
+
+*/
+
 void _StringReverse(){
     char string1[TAM];
 
@@ -431,14 +635,21 @@ void _StringReverse(){
     _Pontilhado();
 }
 /*
- void swab(char *origem, char *destino, int n)
+ Função:    void swab(char *origem, char *destino, size_t n)
 
- Efeito: troca os bytes(caracteres) adjacentes de 2 a 2 em uma string
+ Descrição: troca os bytes(caracteres) adjacentes de 2 a 2 em uma string
 
- Tem pouca utilidade em programas comuns mas pode ser utilizada para preparar blocos de dados para processamento adicional,
- em situações em que os blocos foram enviados através de uma rede organizada em ordem de bytes da rede, e deve ser
- rearranjadas em ordem de bytes nativos (ou vice-versa). Esta lida especificamente com blocos de dados que são compostas de
-  2 bytes (16 bits) das palavras que devem ser reorganizados para que eles tenham um "endianness" apropriado para o sistema local.
+            Tem pouca utilidade em programas comuns mas pode ser utilizada para preparar blocos de dados para processamento adicional,
+            em situações em que os blocos foram enviados através de uma rede organizada em ordem de bytes da rede, e deve ser
+            rearranjadas em ordem de bytes nativos (ou vice-versa). Esta lida especificamente com blocos de dados que são compostas de
+            2 bytes (16 bits) das palavras que devem ser reorganizados para que eles tenham um "endianness" apropriado para o sistema local.
+
+ Parâmetros:
+            - origem: string que será utilizada para escrever na destino
+            - destino: string que receberá a string origem com os caracteres trocados 2 a 2
+            - n : até qual caractere será feita a troca dos bytes adajacentes
+
+ Retorno: sem retorno
 */
 void _StringSwapAdjacentBytes(){
 
@@ -446,7 +657,7 @@ void _StringSwapAdjacentBytes(){
     int n;
     _LimparString(string1,TAM);
     _LimparString(string2,TAM);
-    printf("\n\n _____________ void swab(char *origem, char *destino, int n) _____________  \n\n n: trocar ate o byte n");
+    printf("\n\n _____________ void swab(char *origem, char *destino, size_t n) _____________  \n\n n: trocar ate o byte n");
     strcpy(string1,"sIote  hu ams rtni.g..");
     printf("\n\n\n Exemplo:\n\n String Origem:  %s ",string1);
     swab(string1,string2,strlen(string1));
@@ -465,6 +676,22 @@ void _StringSwapAdjacentBytes(){
 
 }
 //_____________________________________________________________ Funções de Busca _____________________________________________________________
+
+
+/*
+ Função:   char *strchr(char *string, int caractere)
+
+ Descrição:	- Função que realiza uma busca pelo caractere na string
+
+ Parâmetros: - string: string em que será procurado o caractere
+             - caractere: valor do caractere que será buscado
+               (pode-se utilizar a escrita típica de um único caractere. Ex: 'x' )
+
+ Retorno: - retorna o ponteiro de char para a posição em que é encontrada PRIMEIRA ocorrência do caractere na string
+          - caso não encontre nenhuma ocorreência do caractere, retorna NULL
+
+*/
+
 void _Stringchr(){
     char string1[TAM],*stringseguinte;
     int c = 'c';
@@ -490,6 +717,20 @@ void _Stringchr(){
     _Pontilhado();
 
 }
+
+/*
+ Função:   char *strrchr(char *string, int caractere)
+
+ Descrição:	- Função que realiza uma busca pelo caractere na string
+
+ Parâmetros: - string: string em que será procurado o caractere
+             - caractere: valor do caractere que será buscado
+               (pode-se utilizar a escrita típica de um único caractere. Ex: 'x' )
+
+ Retorno: - retorna o ponteiro de char para a posição em que é encontrada ULTIMA ocorrência do caractere na string
+          - caso não encontre nenhuma ocorreência do caractere, retorna NULL
+
+*/
 void _Stringrchr(){
     char string1[TAM],*stringseguinte;
     int c = 'c';
@@ -515,6 +756,20 @@ void _Stringrchr(){
     _Pontilhado();
 
 }
+
+/*
+ Função:   size_t strcspn(const char *string1, const char *string2)
+
+ Descrição:	- Função que realiza uma busca em uma string por caracteres da outra string
+
+ Parâmetros: - string1: string em que serão procurados os caracteres
+             - string2: string com o conjunto de caracteres a serem buscados
+
+ Retorno: - retorna o indice da primeira ocorrencia de algum caractere da string2 na string1
+          - caso não encontre nenhuma ocorreência, retorna o tamanho da string1
+
+*/
+
 void _Stringcspn(){
     char string1[TAM] = "string 123 de teste";
     char caracteres_a_buscar[TAM] = "32w";
@@ -540,6 +795,20 @@ void _Stringcspn(){
 
 
 }
+
+/*
+ Função:   size_t strspn(const char *string1, const char *string2)
+
+ Descrição:	- Função que verifica até que indice a string1 consiste em caracteres contidos na string2
+
+ Parâmetros: - string1: string em que serão procurados os caracteres
+             - string2: string com o conjunto de caracteres a serem testados
+
+ Retorno: - retorna até quantos caracteres a string1 consiste em caracteres contidos na string2
+          - retorna 0 se a string1 nem sequer começar com algum caractere da string2
+
+*/
+
 void _Stringspn(){
     char string1[TAM] = "string 123 de teste";
     char caracteres_a_buscar[TAM] = "s12i ng3tr";
@@ -565,6 +834,21 @@ void _Stringspn(){
 
 
 }
+
+/*
+ Função:   char *strpbrk(const char *string1, const char *string2)
+
+ Descrição:	- Função que busca algum caractere da string2 na string1
+
+ Parâmetros: - string1: string em que serão procurados os caracteres
+             - string2: string com o conjunto de caracteres a serem procurados
+
+ Retorno: - retorna o ponteiro para a posição da primeira ocorrência de algum caractere
+            da string2 na string1
+          - retorna NULL caso não haja ocorrência de caracteres da string2 na string1
+
+*/
+
 void _Stringpbrk(){
     char string1[TAM]= "ABCDabcd";
     char string2[TAM] = "wizard";
@@ -593,6 +877,19 @@ void _Stringpbrk(){
 
 }
 
+/*
+ Função:   char *strstr(const char *string1, const char *string2)
+
+ Descrição:	- Função que realiza uma busca de uma substring em uma string
+
+ Parâmetros: - string1: string em que será procurada a substring
+             - string2: substring a ser buscada
+
+ Retorno: - retorna o ponteiro para a posição da primeira ocorrência da string2 inteira na string1
+          - retorna NULL caso não haja a string2 na string1
+
+*/
+
 void _Stringstr(){
     char string1[TAM] = "abcdefghijk";
     char string2[TAM] = "def";
@@ -620,6 +917,22 @@ void _Stringstr(){
     _Pontilhado();
 }
 
+/*
+ Função:   char * strtok ( char * string, const char * delimitadores )
+
+ Descrição:	- Função que divide uma string de acordo com os delimitadores
+            - Coloca '\0' (NULL) na primeira ocorrência de um dos delimitadores indicando seu novo fim
+            - Utilizando esta função em uma sequência de chamada, poderão ser feitas
+              separações da string (split) , gerando várias substrings
+
+ Parâmetros: - string: string que será encurtada
+             - delimitadores: string com caracteres delimitadores de encurtamento da string
+
+ Retorno: - retorna a string encurtada (do ínicio até a primeira ocorrência de algum dos delimitadores)
+          - retorna NULL caso não encontre nenhum delimitador na string
+
+*/
+
 void _Stringtok(){
     char string[TAM] = "Isto,eh,uma,string";
     char delimitadores[TAM];
@@ -641,8 +954,12 @@ void _Stringtok(){
     printf("\n Delimitadores: ");
     _LerString(delimitadores,TAM);
     _Pontilhado();
+    //Parte a primeira vez a string se possível
+    // ( Coloca '\0' (NULL) na primeira ocorrência de um dos delimitadores )
     if(substr = strtok(string, delimitadores)){
         printf("\n Token 1: %s",substr);
+        //Realizará partições sequenciais da string até que não se encontre mais nenhum delimitador
+        //Passa-se NULL como parâmetro para ir de NULL (Colocado na strtok da chamada anterior) até o delimitador encontrado se for o caso
         for(i=2; substr = strtok(NULL, delimitadores); i++){
             printf("\n Token %d: %s",i,substr);
 
@@ -655,6 +972,7 @@ void _Stringtok(){
 }
 //_____________________________________________________________ Funções Auxiliares ao Programa _____________________________________________________________
 
+// Função que imprime na tela o menu
 void _ImprimeMenu(){
     _LimpaTela();
     printf(" \xC9\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xBB\n");
@@ -682,15 +1000,19 @@ void _ImprimeMenu(){
 
 }
 
+// Função que simplesmente limpa a tela
 void _LimpaTela(){
     system("cls");
 }
 
+// Função que salta linhas e aparece uma mensagem na tela informando que espera-se que uma tecla seja digitada
 void _Pausa(){
     printf("\n\n\n\n -- \n\n ");
     system("pause");
 }
 
+
+// Função responsável por receber uma escolha de menu entre o limite inferior e superior
 int _EscolhaDeOpcao(int LimiteInferior, int LimiteSuperior){
     int Opcao;
 
@@ -706,12 +1028,14 @@ int _EscolhaDeOpcao(int LimiteInferior, int LimiteSuperior){
     }
 }
 
-
+// Função que limpa uma string colocando \0 em todos indices
 void _LimparString(char *string, int tam){
     int i;
     for(i=0;i<tam;i++)
         string[i]='\0';
 }
+
+// Função que imprime na tela uma linha pontilada com 50 ponto
 void _Pontilhado(){
     int i;
     printf("\n ");
@@ -720,14 +1044,18 @@ void _Pontilhado(){
     printf("\n");
 }
 
+// Função que imprime na tela uma linha
 void _Linha(){
     int i;
     for(i=0; i<60; i++)
         printf("_");
 }
+
+// Função que lê uma string do teclado
 void _LerString(char *str, int tam){
     fflush(stdin);
     fgets(str, tam, stdin);
     str[strlen(str)-1]='\0';
 }
 
+//_____________________________________________________________ EOF _____________________________________________________________
