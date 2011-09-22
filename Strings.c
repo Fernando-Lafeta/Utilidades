@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <windows.h>
 
 #define TAM 80
 
@@ -53,7 +54,7 @@ void _Stringtok();
 // Função principal
 
 int main(){
-    int Opcao,i,j;
+    int Opcao;
     system("color f0");
 
     //Loop do Menu
@@ -164,7 +165,7 @@ void _StringCopy(){
 void _String_N_Copy(){
 
     char string1[TAM],string2[TAM];
-    int n,i;
+    int n;
 
     printf("\n\n _____________char *strncpy(char *string2,char *string1, int N) _____________  \n\n");
     strcpy(string1,"string qualquer");
@@ -427,7 +428,7 @@ void _StringCat(){
 */
 
 void _StringError(){
-    int n,i;
+    int n;
     printf("\n\n _____________ char *strerror(int n) _____________  \n\n");
     printf("\n\n Digite n(0 a 43): ");
     n = _EscolhaDeOpcao(0,43);
@@ -485,7 +486,6 @@ void _StringLenght(){
 void _StringSet(){
 
     char string1[TAM],c;
-    int tamanho;
 
     printf("\n\n _____________ char *strset(char *string, int c) _____________  \n");
     strcpy(string1,"abc123def");
@@ -521,7 +521,7 @@ void _StringSet(){
 void _String_N_Set(){
 
     char string1[TAM],c;
-    int tamanho,n;
+    int n;
 
     printf("\n\n _____________ char *strnset(char *string, int c, size_t n) _____________  \n");
     strcpy(string1,"abcdefghi");
@@ -705,7 +705,7 @@ void _Stringchr(){
     printf("\n\n DIGITE: \n\n String: ");
     _LerString(string1,TAM);
     printf("\n Caractere a buscar: ");
-    scanf("%c",&c);
+    c = getchar();
     _Pontilhado();
     stringseguinte = strchr(string1,c);
     if(stringseguinte != NULL){
@@ -744,7 +744,7 @@ void _Stringrchr(){
     printf("\n\n DIGITE: \n\n String: ");
     _LerString(string1,TAM);
     printf("\n Caractere a buscar: ");
-    scanf("%c",&c);
+    c = getchar();
     _Pontilhado();
     stringseguinte = strrchr(string1,c);
     if(stringseguinte != NULL){
@@ -853,7 +853,7 @@ void _Stringpbrk(){
     char string1[TAM]= "ABCDabcd";
     char string2[TAM] = "wizard";
     char *stringseguinte;
-    int indice;
+
     printf("\n\n _______ char *strpbrk(const char *string1, const char *string2) ______  \n\n");
     printf("\n Exemplo:\n\n String: %s   \n Caracteres de busca: %s",string1,string2);
     stringseguinte = strpbrk(string1,string2);
@@ -894,7 +894,6 @@ void _Stringstr(){
     char string1[TAM] = "abcdefghijk";
     char string2[TAM] = "def";
     char *stringseguinte;
-    int indice;
     printf("\n\n _______ char *strstr(const char *string1, const char *string2) ______  \n\n");
     printf("\n Exemplo:\n\n String: %s   \n Substring buscada: %s",string1,string2);
     stringseguinte = strstr(string1,string2);
@@ -956,11 +955,11 @@ void _Stringtok(){
     _Pontilhado();
     //Parte a primeira vez a string se possível
     // ( Coloca '\0' (NULL) na primeira ocorrência de um dos delimitadores )
-    if(substr = strtok(string, delimitadores)){
+    if( (substr = strtok(string, delimitadores)) ){
         printf("\n Token 1: %s",substr);
         //Realizará partições sequenciais da string até que não se encontre mais nenhum delimitador
         //Passa-se NULL como parâmetro para ir de NULL (Colocado na strtok da chamada anterior) até o delimitador encontrado se for o caso
-        for(i=2; substr = strtok(NULL, delimitadores); i++){
+        for(i=2; (substr = strtok(NULL, delimitadores)); i++){
             printf("\n Token %d: %s",i,substr);
 
         }
