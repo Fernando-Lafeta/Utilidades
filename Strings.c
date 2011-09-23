@@ -49,7 +49,10 @@ void _Stringspn();
 void _Stringpbrk();
 void _Stringstr();
 void _Stringtok();
-
+void _Itoa();
+void _Atoi();
+void _Gcvt();
+void _Atof();
 
 // Função principal
 
@@ -60,7 +63,7 @@ int main(){
     //Loop do Menu
     while(1){
         _ImprimeMenu();
-        Opcao = _EscolhaDeOpcao(1,23);
+        Opcao = _EscolhaDeOpcao(1,27);
         _LimpaTela();
 
         if(Opcao == 1)
@@ -108,6 +111,14 @@ int main(){
         if(Opcao == 22)
             _StringSwapAdjacentBytes();
         if(Opcao == 23)
+            _Itoa();
+        if(Opcao == 24)
+            _Gcvt();
+        if(Opcao == 25)
+            _Atoi();
+        if(Opcao == 26)
+            _Atof();
+        if(Opcao == 27)
                 break;
         _Pausa();
 
@@ -167,10 +178,11 @@ void _String_N_Copy(){
     char string1[TAM],string2[TAM];
     int n;
 
+    _LimparString(string2,TAM);
     printf("\n\n _____________char *strncpy(char *string2,char *string1, int N) _____________  \n\n");
     strcpy(string1,"string qualquer");
     strncpy(string2,string1,10);
-    printf ("\n\n Exemplo (com N 10):\n\n String 1:  %30s \n String 2(copia da 1):  %13s \n\n ",string1,string2);
+    printf ("\n\n Exemplo (com N 10):\n\n String 1:  %s \n String 2(copia da 1):  %s \n\n ",string1,string2);
     _Linha();
     printf("\n\n DIGITE: \n\n String 1: ");
     _LimparString(string1,TAM);
@@ -969,6 +981,161 @@ void _Stringtok(){
     }
     _Pontilhado();
 }
+
+//_____________________________________________________________ Funções de Conversão _____________________________________________________________
+
+/* Há várias funções de conversão entre strings e estruturas numéricas:
+
+    .itoa:  Converte int para string
+    .ltoa:  Converte long int para string
+    .gcvt:  Converte double para string
+    .atoi:  Converte string para int
+    .atol:  Converte string para long int
+    .atof:  Converte string para double
+    .e outras envolvendo números sem sinal
+
+ Nota: pelo fato das funções de conversão envolvendo int e long int serem quase idênticas, só será demonstrado o uso das funções com inteiros,
+       pelo mesmo motivo, as funções com números sem sinal não serão exemplificadas aqui.
+
+*/
+
+
+/*
+ Função:   char *itoa(int numero, char *string, int base)
+
+ Biblioteca : stdlib.h (Obs: esta função não é padrão ANSI-C)
+
+ Descrição:	Função que converte um número inteiro para uma string de acordo com a base determinada no terceiro parâmetro
+
+ Parâmetros: - numero : número intiero a ser convertido
+             - string : string que receberá o resultado do número convertido para determinada base
+             - base: base utilizada na conversão do número
+
+ Retorno: - retorna um ponteiro que aponta para o início de string
+
+*/
+
+void _Itoa(){
+    int inteiro,base;
+    char string[TAM] = "teste";
+
+    printf("\n\n ________ char *itoa(int numero, char *string, int base)  _________  \n");
+    printf("\n Exemplo:\n\n numero: %d \n base: %d \n string: %s ",8,2,string);
+    itoa(8,string,2);
+    printf("\n\n String (depois do itoa): %s\n\n",string);
+    _Linha();
+    _LimparString(string,TAM);
+    printf("\n\n DIGITE: \n\n inteiro: ");
+    scanf("%d",&inteiro);
+    printf("\n base(2 a 36): ");
+    scanf("%d",&base);
+    itoa(inteiro,string,base);
+    printf("\n\n String (depois do itoa): %s",string);
+}
+
+/*
+ Função:  char *gcvt(double numero, int quantidade_digitos, char *string)
+
+ Biblioteca : stdlib.h (Obs: esta função não é padrão ANSI-C)
+
+ Descrição:	Função que converte um número real (double) para uma string de acordo com a quantidade de dígitos desejados
+
+ Parâmetros: - numero : número real a ser convertido
+             - quantidade_digitos: quantidade máxima de dígitos do número a serem passados para string (contando parte inteira e fracionária)
+             - string : string que receberá o resultado da conversão
+
+ Retorno: - retorna um ponteiro que aponta para o início de string
+
+*/
+
+void _Gcvt(){
+    double numero;
+    int quantidade_digitos;
+    char string[TAM] = "teste";
+
+    numero = 1365.25789;
+    quantidade_digitos = 6;
+
+    printf("\n\n ________ char *gcvt(double numero, int quantidade_digitos, char *string)   _________  \n");
+    printf("\n Exemplo:\n\n numero: %.4lf \n Quantidade de digitos para string: %d \n String: %s ",numero,quantidade_digitos,string);
+    gcvt(numero,quantidade_digitos,string);
+    printf("\n\n String (depois do gcvt): %s\n\n",string);
+    _Linha();
+    _LimparString(string,TAM);
+    printf("\n\n DIGITE: \n\n Numero com parte fracionaria: ");
+    scanf("%lf",&numero);
+    printf("\n Quant. de digitos para string: ");
+    scanf("%d",&quantidade_digitos);
+    gcvt(numero,quantidade_digitos,string);
+    printf("\n\n String (depois do gcvt): %s",string);
+}
+
+/*
+ Função:  int atoi(const char *string )
+
+ Biblioteca : stdlib.h
+
+ Descrição:	Função que converte uma string iniciada por um número ou apenas com números em um inteiro
+
+ Parâmetros: - string : string que contém o inteiro em seu início
+
+ Retorno:
+         - retorna o inteiro convertido da string se for bem sucedida
+         - retorna 0 se ocorrer algum erro , como por exemplo, uma string sem números ou que não seja iniciada por números
+         - se acontecer overflow o retorno é indefinido
+
+*/
+
+
+void _Atoi(){
+    int numero;
+    char string[TAM] = "0123045";
+    numero = 2;
+    printf("\n\n ________ int atoi(const char *string )    _________  \n");
+    printf("\n Exemplo:\n\n Numero (sem utilizar atoi): %d \n String: %s ",numero,string);
+    numero = atoi(string);
+    printf("\n\n Numero (depois de utilizar atoi): %d\n\n",numero);
+    _Linha();
+    _LimparString(string,TAM);
+    printf("\n\n DIGITE: \n\n String iniciada por numeros: ");
+    _LerString(string,TAM);
+    numero = atoi(string);
+    printf("\n\n Numero (depois do atoi): %d\n\n",numero);
+}
+
+/*
+ Função:  double atof(const char *string )
+
+ Biblioteca : stdlib.h
+
+ Descrição:	Função que converte uma string iniciada por um número real em um número real (double)
+
+ Parâmetros: - string : string que contém o número real em seu início
+
+ Retorno:
+         - retorna o número real convertido da string se for bem sucedida
+         - retorna 0 se ocorrer algum erro , como por exemplo, uma string sem números ou que não seja iniciada por números
+         - se acontecer overflow o retorno é indefinido
+
+*/
+
+void _Atof(){
+    double numero;
+    char string[TAM] = "01234.43210";
+    numero = 2.01;
+    printf("\n\n ________ double atof(const char *string )    _________  \n");
+    printf("\n Exemplo:\n\n Numero (sem utilizar atof): %.2lf \n String: %s ",numero,string);
+    numero = atof(string);
+    printf("\n\n Numero (depois de utilizar atof): %lf\n\n",numero);
+    _Linha();
+    _LimparString(string,TAM);
+    printf("\n\n DIGITE: \n\n String iniciada por um numero real: ");
+    _LerString(string,TAM);
+    numero = atof(string);
+    printf("\n\n Numero (depois do atof): %lf\n\n",numero);
+}
+
+
 //_____________________________________________________________ Funções Auxiliares ao Programa _____________________________________________________________
 
 // Função que imprime na tela o menu
@@ -982,11 +1149,11 @@ void _ImprimeMenu(){
     printf(" \xba\t\t\t\t\t\t\t\t\t \xba\n");
     printf(" \xba MENU: \t\t\t\t\t\t\t\t \xba\n "
            "\xba \t\t\t\t\t\t\t\t\t \xba\n "
-           "\xba  (1) strcpy\t\t (12) strupr\t\t\t\t\t \xba\n "
-           "\xba  (2) strncpy\t\t (13) strlwr \t\t\t\t\t \xba"
-           "\n \xba  (3) strcmp\t\t (14) strrev \t\t\t\t\t \xba\n "
-           "\xba  (4) strcmpi\t\t (15) strchr \t\t\t\t\t \xba\n "
-           "\xba  (5) strncmp\t\t (16) Strrchr\t\t\t\t\t \xba"
+           "\xba  (1) strcpy\t\t (12) strupr\t\t (23) itoa\t\t \xba\n "
+           "\xba  (2) strncpy\t\t (13) strlwr \t\t (24) gcvt\t\t \xba"
+           "\n \xba  (3) strcmp\t\t (14) strrev \t\t (25) atoi\t\t \xba\n "
+           "\xba  (4) strcmpi\t\t (15) strchr \t\t (26) atof\t\t \xba\n "
+           "\xba  (5) strncmp\t\t (16) strrchr\t\t (27) sair\t\t \xba"
            "\n \xba  (6) strcat\t\t (17) strcspn\t\t\t\t\t \xba \n "
            "\xba  (7) strncat\t\t (18) strspn\t\t\t\t\t \xba \n "
            "\xba  (8) strerror \t (19) strstr\t\t\t\t\t \xba "
