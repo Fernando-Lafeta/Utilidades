@@ -34,6 +34,9 @@ typedef struct{
 
 //Função Quicksort que ordena lista decrescentemente em relação à pontuação
 void QuickSort(TipoLista *Lista){
+    //Colocando índice nas células
+    ColocaIndice(Lista);
+
 	//Passando o ponteiro indicador da primeira celula com conteúdo ,e a ultima e também a lista
 	Ordena(Lista->Primeiro->Prox,Lista->Ultimo,Lista);
 }
